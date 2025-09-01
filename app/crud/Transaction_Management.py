@@ -6,13 +6,19 @@ import db
 
 def get_transactions(user_id: int, page: int, limit: int):
     transactions = TransactionManagement.query.filter_by(user_id=user_id).paginate(page=page, per_page=limit)
+    if transactions is None:
+        return {"error": "Transactions not found"}, 404
     return TransactionManagementSchema.model_validate(transactions)
 
 def get_transaction_detail(transaction_id: int):
     transaction = TransactionManagement.query.filter_by(id=transaction_id).first()
+    if transaction is None:
+        return {"error": "Transaction not found"}, 404
     return TransactionManagementSchema.model_validate(transaction)
 
 def create_transaction(transaction: TransactionManagementSchema):
+    if transaction is None:
+        return {"error": "Transaction not found"}, 404
     transaction = TransactionManagement(**transaction.model_dump())
     db.session.add(transaction)
     db.session.commit()

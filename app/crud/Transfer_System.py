@@ -7,11 +7,17 @@ import db
 
 def get_transfer(transfer_id: int):
     transfer = TransferSchema.query.filter_by(id=transfer_id).first()
+    if transfer is None:
+        return {"error": "Transfer not found"}, 404
     return TransferSchema.model_validate(transfer)
 
 def transfer_money(sender_user_id: int, recipient_user_id: int, amount: float, description: str):
     sender = UserManagement.query.filter_by(id=sender_user_id).first()
     recipient = UserManagement.query.filter_by(id=recipient_user_id).first()
+    if sender is None:
+        return {"error": "Sender not found"}, 404
+    if recipient is None:
+        return {"error": "Recipient not found"}, 404
     if sender.balance < amount:
         return {"error": "Insufficient balance"}, 400
     sender.balance -= amount
