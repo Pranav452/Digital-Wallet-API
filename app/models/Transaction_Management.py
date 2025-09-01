@@ -1,6 +1,6 @@
 # this file contains the models for the transaction management system
 
-from sqlalchemy import ForeignKey, DECIMAL
+from sqlalchemy import ForeignKey, DECIMAL, String
 from db import Base
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
@@ -12,7 +12,7 @@ class TransactionManagement(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True, nullable=False)
-    transaction_type: Mapped[str] = mapped_column(index=True, nullable=False, length=20)
+    transaction_type: Mapped[str] = mapped_column(String(20), index=True, nullable=False)
     amount: Mapped[float] = mapped_column(DECIMAL(10,2), index=True, nullable=False)
     description: Mapped[str] = mapped_column(nullable=True)
     reference_transaction_id: Mapped[int] = mapped_column(ForeignKey("transactions.id"), index=True, nullable=True)

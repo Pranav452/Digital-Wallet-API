@@ -59,11 +59,10 @@ def seed_database():
             db.add(user)
         
         db.commit()
-        db.refresh(users[0])  # john_doe
-        db.refresh(users[1])  # jane_smith
-        db.refresh(users[2])  # bob_wilson
-        db.refresh(users[3])  # alice_johnson
-        db.refresh(users[4])  # charlie_brown
+        
+        # Refresh users to get their IDs
+        for user in users:
+            db.refresh(user)
         
         print(f"Created {len(users)} users")
         
@@ -136,9 +135,18 @@ def seed_database():
             description="Withdrew money from wallet"
         ))
         
+        # Add all basic transactions first
+        for transaction in transactions:
+            db.add(transaction)
+        
+        db.commit()
+        
+        # Refresh transactions to get their IDs
+        for transaction in transactions:
+            db.refresh(transaction)
+        
         # Transfer transactions
         # Transfer from john to jane
-        transfer_id_1 = str(uuid.uuid4())
         sender_transaction_1 = TransactionManagement(
             user_id=users[0].id,
             transaction_type="TRANSFER_OUT",
@@ -165,7 +173,6 @@ def seed_database():
         recipient_transaction_1.reference_transaction_id = sender_transaction_1.id
         
         # Transfer from bob to alice
-        transfer_id_2 = str(uuid.uuid4())
         sender_transaction_2 = TransactionManagement(
             user_id=users[2].id,
             transaction_type="TRANSFER_OUT",
@@ -191,7 +198,7 @@ def seed_database():
         sender_transaction_2.reference_transaction_id = recipient_transaction_2.id
         recipient_transaction_2.reference_transaction_id = sender_transaction_2.id
         
-        # Add all transactions to the list for counting
+        # Add transfer transactions to the list for counting
         transactions.extend([
             sender_transaction_1, recipient_transaction_1,
             sender_transaction_2, recipient_transaction_2
@@ -199,16 +206,18 @@ def seed_database():
         
         # Update user balances based on transactions
         for transaction in transactions:
-            if transaction.transaction_type == "CREDIT":
-                transaction.user.balance += transaction.amount
-            elif transaction.transaction_type == "DEBIT":
-                transaction.user.balance -= transaction.amount
-            elif transaction.transaction_type == "TRANSFER_OUT":
-                transaction.user.balance -= transaction.amount
-            elif transaction.transaction_type == "TRANSFER_IN":
-                transaction.user.balance += transaction.amount
-            
-            transaction.user.updated_at = datetime.now()
+            user = db.query(UserManagement).filter(UserManagement.id == transaction.user_id).first()
+            if user:
+                if transaction.transaction_type == "CREDIT":
+                    user.balance += transaction.amount
+                elif transaction.transaction_type == "DEBIT":
+                    user.balance -= transaction.amount
+                elif transaction.transaction_type == "TRANSFER_OUT":
+                    user.balance -= transaction.amount
+                elif transaction.transaction_type == "TRANSFER_IN":
+                    user.balance += transaction.amount
+                
+                user.updated_at = datetime.now()
         
         db.commit()
         
@@ -218,6 +227,7 @@ def seed_database():
         # Print final balances
         print("\nFinal user balances:")
         for user in users:
+            db.refresh(user)
             print(f"{user.username}: ${user.balance:.2f}")
             
     except Exception as e:
