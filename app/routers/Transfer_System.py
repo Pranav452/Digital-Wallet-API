@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 from app.crud.Transfer_System import get_transfer, transfer_money
-from app.crud.Transfer_System import get_transfer_detail
+
 
 router = APIRouter()
 

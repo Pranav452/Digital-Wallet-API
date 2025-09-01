@@ -1,6 +1,5 @@
 #this file contains the crud operations for the wallet operations systemq
 import db
-from app.models.Wallet_Operations import WalletOperations
 from app.schema.Wallet_Operations import WalletOperationsSchema
 
 

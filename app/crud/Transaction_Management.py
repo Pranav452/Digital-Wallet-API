@@ -2,17 +2,6 @@
 from app.models.Transaction_Management import TransactionManagement
 from app.schema.Transaction_Management import TransactionManagementSchema
 
-import db
-
-
-
-
-def create_transaction(user_id: int, transaction_type: str, amount: float, description: str):
-    transaction = TransactionManagement(user_id=user_id, transaction_type=transaction_type, amount=amount, description=description)
-    db.session.add(transaction)
-    db.session.commit()
-    return TransactionManagementSchema.model_validate(transaction)
-
 
 def get_transactions(user_id: int, page: int, limit: int):
     transactions = TransactionManagement.query.filter_by(user_id=user_id).paginate(page=page, per_page=limit)

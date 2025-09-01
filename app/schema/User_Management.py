@@ -10,5 +10,3 @@ class UserManagementSchema(BaseModel):
     password: str
     phone_number: str
     balance: float
-    created_at: datetime
-    updated_at: datetime

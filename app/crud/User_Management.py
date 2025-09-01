@@ -4,7 +4,11 @@ from app.models.User_Management import UserManagement
 from app.schema.User_Management import UserManagementSchema
 import db
 
-
+def create_user(user: UserManagementSchema):
+    user = UserManagement(username=user.username, email=user.email, password=user.password, phone_number=user.phone_number)
+    db.session.add(user)
+    db.session.commit()
+    return UserManagementSchema.model_validate(user)
 
 def get_user(user_id: int):
     user = UserManagement.query.filter_by(id=user_id).first()
