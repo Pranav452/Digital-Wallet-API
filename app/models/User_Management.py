@@ -3,16 +3,16 @@ from datetime import datetime
 from db import Base
 from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
-from sqlalchemy import DECIMAL
+from sqlalchemy import DECIMAL, String
 
 class UserManagement(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True, autoincrement=True)
-    username: Mapped[str] = mapped_column(index=True, unique=True, nullable=False, length=50)
-    email: Mapped[str] = mapped_column(index=True, unique=True, nullable=False, length=100)
-    password: Mapped[str] = mapped_column(nullable=False, length=255)
-    phone_number: Mapped[str] = mapped_column(nullable=True, length=15)
+    username: Mapped[str] = mapped_column(String(50), index=True, unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(100), index=True, unique=True, nullable=False)
+    password: Mapped[str] = mapped_column(String(255), nullable=False)
+    phone_number: Mapped[str] = mapped_column(String(15), nullable=True)
     balance: Mapped[float] = mapped_column(DECIMAL(10,2), nullable=False, default=0.00)
     created_at: Mapped[datetime] = mapped_column(nullable=False, default=datetime.now)
     updated_at: Mapped[datetime] = mapped_column(nullable=False, default=datetime.now, onupdate=datetime.now)
