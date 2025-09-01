@@ -18,4 +18,13 @@ class UserManagement(Base):
     balance:Mapped[float] = mapped_column(index=True, nullable=False, default=0.0)
     created_at:Mapped[datetime] = mapped_column(index=True, nullable=False, default=datetime.now())
     updated_at:Mapped[datetime] = mapped_column(index=True, nullable=False, default=datetime.now())
+
+    def __init__(self, username: str, email: str, password: str, phone_number: str):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.phone_number = phone_number
+        self.balance = 0.0
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
     
