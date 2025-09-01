@@ -8,6 +8,7 @@ from db import SessionLocal, engine
 from app.models.User_Management import UserManagement
 from app.models.Transaction_Management import TransactionManagement
 from datetime import datetime
+from decimal import Decimal
 import uuid
 
 def seed_database():
@@ -73,35 +74,35 @@ def seed_database():
         transactions.append(TransactionManagement(
             user_id=users[0].id,
             transaction_type="CREDIT",
-            amount=100.00,
+            amount=Decimal('100.00'),
             description="Initial wallet load"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[1].id,
             transaction_type="CREDIT",
-            amount=50.00,
+            amount=Decimal('50.00'),
             description="Initial wallet load"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[2].id,
             transaction_type="CREDIT",
-            amount=200.00,
+            amount=Decimal('200.00'),
             description="Initial wallet load"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[3].id,
             transaction_type="CREDIT",
-            amount=75.00,
+            amount=Decimal('75.00'),
             description="Initial wallet load"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[4].id,
             transaction_type="CREDIT",
-            amount=150.00,
+            amount=Decimal('150.00'),
             description="Initial wallet load"
         ))
         
@@ -109,14 +110,14 @@ def seed_database():
         transactions.append(TransactionManagement(
             user_id=users[0].id,
             transaction_type="CREDIT",
-            amount=50.00,
+            amount=Decimal('50.00'),
             description="Added money to wallet"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[1].id,
             transaction_type="CREDIT",
-            amount=25.00,
+            amount=Decimal('25.00'),
             description="Added money to wallet"
         ))
         
@@ -124,14 +125,14 @@ def seed_database():
         transactions.append(TransactionManagement(
             user_id=users[0].id,
             transaction_type="DEBIT",
-            amount=25.00,
+            amount=Decimal('25.00'),
             description="Withdrew money from wallet"
         ))
         
         transactions.append(TransactionManagement(
             user_id=users[2].id,
             transaction_type="DEBIT",
-            amount=50.00,
+            amount=Decimal('50.00'),
             description="Withdrew money from wallet"
         ))
         
@@ -150,7 +151,7 @@ def seed_database():
         sender_transaction_1 = TransactionManagement(
             user_id=users[0].id,
             transaction_type="TRANSFER_OUT",
-            amount=25.00,
+            amount=Decimal('25.00'),
             description="Transfer to jane_smith",
             recipient_user_id=users[1].id
         )
@@ -158,7 +159,7 @@ def seed_database():
         recipient_transaction_1 = TransactionManagement(
             user_id=users[1].id,
             transaction_type="TRANSFER_IN",
-            amount=25.00,
+            amount=Decimal('25.00'),
             description="Transfer from john_doe",
             reference_transaction_id=None,  # Will be set after flush
             recipient_user_id=users[0].id
@@ -176,7 +177,7 @@ def seed_database():
         sender_transaction_2 = TransactionManagement(
             user_id=users[2].id,
             transaction_type="TRANSFER_OUT",
-            amount=30.00,
+            amount=Decimal('30.00'),
             description="Transfer to alice_johnson",
             recipient_user_id=users[3].id
         )
@@ -184,7 +185,7 @@ def seed_database():
         recipient_transaction_2 = TransactionManagement(
             user_id=users[3].id,
             transaction_type="TRANSFER_IN",
-            amount=30.00,
+            amount=Decimal('30.00'),
             description="Transfer from bob_wilson",
             reference_transaction_id=None,  # Will be set after flush
             recipient_user_id=users[2].id
