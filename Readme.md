@@ -1,0 +1,1 @@
+here we have build a  backend application using FastAPI that functions as a digital wallet system. It should allow users to manage their wallets, maintain transaction records, and simulate money transfers between users. Note: This is only a backend simulation; no real money will be transferred.
