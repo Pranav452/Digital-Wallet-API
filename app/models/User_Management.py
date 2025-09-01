@@ -2,7 +2,7 @@
 from datetime import datetime
 
 from db import Base
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, relationship
 from sqlalchemy.orm import mapped_column
 
 
@@ -18,6 +18,7 @@ class UserManagement(Base):
     balance:Mapped[float] = mapped_column(index=True, nullable=False, default=0.0)
     created_at:Mapped[datetime] = mapped_column(index=True, nullable=False, default=datetime.now())
     updated_at:Mapped[datetime] = mapped_column(index=True, nullable=False, default=datetime.now())
+    transaction = relationship("TransactionManagement", back_populates="user")
 
     def __init__(self, username: str, email: str, password: str, phone_number: str):
         self.username = username
