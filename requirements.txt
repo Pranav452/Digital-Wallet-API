@@ -1,0 +1,33 @@
+# Dependencies for the FastAPI application
+
+# FastAPI and ASGI server
+fastapi
+uvicorn[standard]
+
+# Database and ORM
+sqlalchemy
+alembic
+
+# SQLite support (included with Python, but explicit for clarity)
+# No additional package needed for SQLite
+
+# Data validation and serialization
+pydantic
+pydantic-settings
+
+# HTTP client for testing
+httpx
+
+# Environment variable management
+python-dotenv
+
+# Testing framework
+pytest
+pytest-asyncio
+
+# Development tools
+python-multipart
+email-validator
+
+# Optional: For better performance
+uvloop
